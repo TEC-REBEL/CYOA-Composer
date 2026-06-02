@@ -1,7 +1,7 @@
 <div class="cyoa-settings">
     <div class="inline-drawer">
         <div class="inline-drawer-toggle inline-drawer-header">
-            <b>CYOA Multi-Choice Combiner</b>
+            <b>🎭 CYOA Multi-Choice Combiner</b>
             <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
         </div>
         <div class="inline-drawer-content">
@@ -11,10 +11,103 @@
                     <input type="checkbox" id="cyoa_enabled" />
                     <span>Enable multi-choice selection</span>
                 </label>
+            </div>
+
+            <hr />
+
+            <!-- Detection Mode -->
+            <div class="cyoa-block">
+                <label for="cyoa_detection_mode">Choice Detection</label>
+                <select id="cyoa_detection_mode" class="text_pole">
+                    <option value="buttons">Buttons (.menu-msg-button)</option>
+                    <option value="numbered">Numbered Lists (ol &gt; li)</option>
+                    <option value="bulleted">Bulleted Lists (ul &gt; li)</option>
+                    <option value="all-list">All List Items (li)</option>
+                    <option value="custom">Custom CSS Selector</option>
+                </select>
                 <small style="display: block; margin-top: 4px; opacity: 0.6;">
-                    When enabled, clicking a CYOA choice button will select it instead of immediately sending.
-                    You can then select multiple choices and send them all at once.
+                    Choose how the extension finds CYOA choices in AI messages.
                 </small>
+                <div id="cyoa_custom_selector_row" style="display:none; margin-top: 6px;">
+                    <label for="cyoa_custom_selector" style="font-size:12px;">Custom CSS Selector</label>
+                    <input type="text" id="cyoa_custom_selector" class="text_pole"
+                           placeholder="e.g. ul ul > li, .custom-my-class" />
+                    <small style="display: block; margin-top: 2px; opacity: 0.5;">
+                        Scoped inside <code>.mes_text</code> automatically. DOMPurify prefixes classes with <code>custom-</code>.
+                    </small>
+                </div>
+            </div>
+
+            <hr />
+
+            <!-- Panel Position -->
+            <div class="cyoa-block">
+                <label>Panel Position</label>
+                <div class="cyoa-position-grid" id="cyoa_position_grid">
+                    <label class="cyoa-pos-option" data-pos="side-right">
+                        <input type="radio" name="cyoa_panel_pos" value="side-right" />
+                        <div class="cyoa-pos-preview">
+                            <div class="cyoa-pos-chat"></div>
+                            <div class="cyoa-pos-panel cyoa-pos-right"></div>
+                        </div>
+                        <span>Right Side</span>
+                    </label>
+                    <label class="cyoa-pos-option" data-pos="side-left">
+                        <input type="radio" name="cyoa_panel_pos" value="side-left" />
+                        <div class="cyoa-pos-preview">
+                            <div class="cyoa-pos-panel cyoa-pos-left"></div>
+                            <div class="cyoa-pos-chat"></div>
+                        </div>
+                        <span>Left Side</span>
+                    </label>
+                    <label class="cyoa-pos-option" data-pos="bottom">
+                        <input type="radio" name="cyoa_panel_pos" value="bottom" />
+                        <div class="cyoa-pos-preview cyoa-pos-preview-bottom">
+                            <div class="cyoa-pos-chat" style="flex:1;"></div>
+                            <div class="cyoa-pos-panel cyoa-pos-bot"></div>
+                        </div>
+                        <span>Bottom</span>
+                    </label>
+                </div>
+            </div>
+
+            <hr />
+
+            <!-- Theme -->
+            <div class="cyoa-block">
+                <label>Theme</label>
+                <div class="cyoa-theme-grid" id="cyoa_theme_grid">
+                    <label class="cyoa-theme-swatch" data-theme="purple" title="Purple Haze">
+                        <input type="radio" name="cyoa_theme" value="purple" />
+                        <div class="cyoa-swatch-color" style="background: linear-gradient(135deg, #7c3aed, #6366f1);"></div>
+                        <span>Purple</span>
+                    </label>
+                    <label class="cyoa-theme-swatch" data-theme="cyan" title="Cyber Teal">
+                        <input type="radio" name="cyoa_theme" value="cyan" />
+                        <div class="cyoa-swatch-color" style="background: linear-gradient(135deg, #06b6d4, #0ea5e9);"></div>
+                        <span>Cyan</span>
+                    </label>
+                    <label class="cyoa-theme-swatch" data-theme="rose" title="Sakura Rose">
+                        <input type="radio" name="cyoa_theme" value="rose" />
+                        <div class="cyoa-swatch-color" style="background: linear-gradient(135deg, #e11d48, #f43f5e);"></div>
+                        <span>Rose</span>
+                    </label>
+                    <label class="cyoa-theme-swatch" data-theme="amber" title="Solar Amber">
+                        <input type="radio" name="cyoa_theme" value="amber" />
+                        <div class="cyoa-swatch-color" style="background: linear-gradient(135deg, #d97706, #f59e0b);"></div>
+                        <span>Amber</span>
+                    </label>
+                    <label class="cyoa-theme-swatch" data-theme="emerald" title="Emerald Night">
+                        <input type="radio" name="cyoa_theme" value="emerald" />
+                        <div class="cyoa-swatch-color" style="background: linear-gradient(135deg, #059669, #10b981);"></div>
+                        <span>Emerald</span>
+                    </label>
+                    <label class="cyoa-theme-swatch" data-theme="minimal" title="Ghost">
+                        <input type="radio" name="cyoa_theme" value="minimal" />
+                        <div class="cyoa-swatch-color" style="background: linear-gradient(135deg, #64748b, #94a3b8);"></div>
+                        <span>Ghost</span>
+                    </label>
+                </div>
             </div>
 
             <hr />
@@ -25,9 +118,6 @@
                     <input type="checkbox" id="cyoa_show_numbers" />
                     <span>Include numbering in sent message</span>
                 </label>
-                <small style="display: block; margin-top: 4px; opacity: 0.6;">
-                    Adds "1.", "2.", etc. before each choice in the combined message.
-                </small>
             </div>
 
             <hr />
@@ -35,15 +125,12 @@
             <!-- Send Format -->
             <div class="cyoa-block">
                 <label for="cyoa_send_format">Send Format Template</label>
-                <div class="cyoa-format-row">
-                    <textarea id="cyoa_send_format" class="cyoa-format-textarea" spellcheck="false"></textarea>
-                </div>
+                <textarea id="cyoa_send_format" class="cyoa-format-textarea" spellcheck="false"></textarea>
                 <div style="margin-top: 4px;">
-                    <button id="cyoa_reset_format" class="menu_button cyoa-small-btn" title="Reset to default format">↩ Reset</button>
+                    <button id="cyoa_reset_format" class="menu_button cyoa-small-btn">↩ Reset</button>
                 </div>
                 <small style="display: block; margin-top: 4px; opacity: 0.6;">
-                    Use <code>{choices}</code> as a placeholder for the selected choices.
-                    <br/>Default: <code>I choose:\n{choices}</code>
+                    Use <code>{choices}</code> as placeholder. Default: <code>I choose:\n{choices}</code>
                 </small>
             </div>
         </div>

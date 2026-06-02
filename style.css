@@ -1,112 +1,90 @@
 /* ═══════════════════════════════════════════════════════════
    CYOA Multi-Choice Combiner — Styles
-   Composition Panel with edit, add, reorder capabilities
+   Themes · Side/Bottom Panel · Expandable Items
    ═══════════════════════════════════════════════════════════ */
 
-/* ─── Enhanced Choice Buttons (in chat) ─── */
+/* ── Theme Tokens (HSL-based, everything derives from --cyoa-h/s/l) ── */
 
-.mes_text .custom-menu-msg-button.cyoa-enhanced {
+.cyoa-panel[data-theme="purple"] { --cyoa-h:263; --cyoa-s:90%; --cyoa-l:58%; }
+.cyoa-panel[data-theme="cyan"]   { --cyoa-h:188; --cyoa-s:86%; --cyoa-l:50%; }
+.cyoa-panel[data-theme="rose"]   { --cyoa-h:340; --cyoa-s:82%; --cyoa-l:52%; }
+.cyoa-panel[data-theme="amber"]  { --cyoa-h:38;  --cyoa-s:92%; --cyoa-l:50%; }
+.cyoa-panel[data-theme="emerald"]{ --cyoa-h:160; --cyoa-s:84%; --cyoa-l:39%; }
+.cyoa-panel[data-theme="minimal"]{ --cyoa-h:215; --cyoa-s:16%; --cyoa-l:56%; }
+
+.cyoa-panel {
+    --cyoa-accent:     hsl(var(--cyoa-h), var(--cyoa-s), var(--cyoa-l));
+    --cyoa-accent-dim: hsla(var(--cyoa-h), var(--cyoa-s), var(--cyoa-l), 0.15);
+    --cyoa-accent-glow:hsla(var(--cyoa-h), var(--cyoa-s), var(--cyoa-l), 0.30);
+    --cyoa-accent-brd: hsla(var(--cyoa-h), var(--cyoa-s), var(--cyoa-l), 0.25);
+    --cyoa-accent-txt: hsl(var(--cyoa-h), calc(var(--cyoa-s) * 0.7), 76%);
+    --cyoa-bg:         rgba(10, 10, 18, 0.93);
+    --cyoa-bg2:        rgba(255, 255, 255, 0.03);
+    --cyoa-text:       rgba(255, 255, 255, 0.78);
+    --cyoa-text-dim:   rgba(255, 255, 255, 0.38);
+    --cyoa-border:     rgba(255, 255, 255, 0.06);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Choice Elements in Chat (buttons / list items / custom)
+   ═══════════════════════════════════════════════════════════ */
+
+.mes_text .cyoa-enhanced {
     position: relative;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
-    border: 1.5px solid transparent;
+    transition: all 0.22s ease;
+    border-radius: 6px;
 }
 
-.mes_text .custom-menu-msg-button.cyoa-enhanced:hover {
-    border-color: rgba(139, 92, 246, 0.5);
-    box-shadow: 0 0 16px rgba(139, 92, 246, 0.15),
-                inset 0 0 12px rgba(139, 92, 246, 0.05);
-    transform: translateY(-1px);
+.mes_text .cyoa-enhanced:hover {
+    background: rgba(139, 92, 246, 0.08);
+    box-shadow: inset 2px 0 0 rgba(139, 92, 246, 0.5);
 }
 
-.mes_text .custom-menu-msg-button.cyoa-enhanced:active {
-    transform: translateY(0px) scale(0.99);
+/* Selected glow (uses inline vars set by theme if panel exists, else fallback) */
+.mes_text .cyoa-selected {
+    background: rgba(139, 92, 246, 0.10) !important;
+    box-shadow: inset 3px 0 0 rgba(139, 92, 246, 0.8),
+                0 0 12px rgba(139, 92, 246, 0.12) !important;
 }
-
-/* ─── Multi-select Hint Icon ─── */
-
-.cyoa-multi-hint {
-    position: absolute;
-    top: 4px;
-    right: 6px;
-    opacity: 0.25;
-    transition: opacity 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--SmartThemeBodyColor, #ccc);
-    pointer-events: none;
-}
-
-.mes_text .custom-menu-msg-button.cyoa-enhanced:hover .cyoa-multi-hint {
-    opacity: 0.5;
-}
-
-/* ─── Selected State ─── */
-
-.mes_text .custom-menu-msg-button.cyoa-selected {
-    border-color: rgba(139, 92, 246, 0.8) !important;
-    background: linear-gradient(
-        135deg,
-        rgba(139, 92, 246, 0.12) 0%,
-        rgba(99, 102, 241, 0.08) 50%,
-        rgba(168, 85, 247, 0.12) 100%
-    ) !important;
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.2),
-                0 0 40px rgba(139, 92, 246, 0.08),
-                inset 0 0 15px rgba(139, 92, 246, 0.06) !important;
-}
-
-.mes_text .custom-menu-msg-button.cyoa-selected .cyoa-multi-hint {
-    opacity: 0.9;
-    color: #a78bfa;
-}
-
-/* ─── Selection Number Badge (on buttons) ─── */
 
 .cyoa-select-number {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
-    min-width: 20px;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
     border-radius: 50%;
     background: linear-gradient(135deg, #7c3aed, #6366f1);
     color: #fff;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
-    margin-right: 8px;
+    margin-right: 6px;
     flex-shrink: 0;
-    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.4);
-    animation: cyoa-badge-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 1px 6px rgba(124, 58, 237, 0.4);
+    animation: cyoa-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@keyframes cyoa-badge-pop {
+@keyframes cyoa-pop {
     0%   { transform: scale(0); opacity: 0; }
     60%  { transform: scale(1.2); }
     100% { transform: scale(1); opacity: 1; }
 }
 
 /* ═══════════════════════════════════════════════════════════
-   Composition Panel (floating bottom drawer)
+   Panel Shell (shared)
    ═══════════════════════════════════════════════════════════ */
 
 .cyoa-panel {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
     z-index: 10000;
-    transform: translateY(100%);
     opacity: 0;
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-                opacity 0.25s ease;
     pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .cyoa-panel.cyoa-visible {
-    transform: translateY(0);
     opacity: 1;
     pointer-events: all;
 }
@@ -114,424 +92,455 @@
 .cyoa-panel-inner {
     display: flex;
     flex-direction: column;
-    background: rgba(12, 12, 20, 0.92);
-    backdrop-filter: blur(24px) saturate(1.5);
-    -webkit-backdrop-filter: blur(24px) saturate(1.5);
-    border-top: 1px solid rgba(139, 92, 246, 0.3);
-    box-shadow: 0 -4px 40px rgba(0, 0, 0, 0.5),
-                0 -1px 0 rgba(139, 92, 246, 0.15);
-    max-height: 45vh;
+    background: var(--cyoa-bg);
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid var(--cyoa-accent-brd);
+    box-shadow: 0 4px 40px rgba(0,0,0,0.45),
+                0 0 1px var(--cyoa-accent-glow);
+    overflow: hidden;
 }
 
-/* ─── Collapsed mode ─── */
+/* ── Collapsed ── */
+.cyoa-panel.cyoa-collapsed .cyoa-panel-body { display: none; }
+.cyoa-panel.cyoa-collapsed .cyoa-panel-footer { display: none; }
 
-.cyoa-panel.cyoa-collapsed .cyoa-queue-list,
-.cyoa-panel.cyoa-collapsed .cyoa-add-custom {
-    display: none;
+/* ═══════════════════════════════════════════════════════════
+   Position: Side Right
+   ═══════════════════════════════════════════════════════════ */
+
+.cyoa-panel.cyoa-pos-side-right {
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%) translateX(20px);
+    width: 300px;
+    max-height: 70vh;
 }
 
-.cyoa-panel.cyoa-collapsed .cyoa-panel-inner {
-    max-height: none;
+.cyoa-panel.cyoa-pos-side-right.cyoa-visible {
+    transform: translateY(-50%) translateX(0);
 }
 
-.cyoa-panel.cyoa-collapsed #cyoa-collapse-btn svg {
-    transform: rotate(180deg);
+.cyoa-panel.cyoa-pos-side-right .cyoa-panel-inner {
+    border-radius: 14px;
+    max-height: 70vh;
 }
 
-/* ─── Panel Header ─── */
+/* ═══════════════════════════════════════════════════════════
+   Position: Side Left
+   ═══════════════════════════════════════════════════════════ */
+
+.cyoa-panel.cyoa-pos-side-left {
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%) translateX(-20px);
+    width: 300px;
+    max-height: 70vh;
+}
+
+.cyoa-panel.cyoa-pos-side-left.cyoa-visible {
+    transform: translateY(-50%) translateX(0);
+}
+
+.cyoa-panel.cyoa-pos-side-left .cyoa-panel-inner {
+    border-radius: 14px;
+    max-height: 70vh;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Position: Bottom
+   ═══════════════════════════════════════════════════════════ */
+
+.cyoa-panel.cyoa-pos-bottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translateY(100%);
+}
+
+.cyoa-panel.cyoa-pos-bottom.cyoa-visible {
+    transform: translateY(0);
+}
+
+.cyoa-panel.cyoa-pos-bottom .cyoa-panel-inner {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    max-height: 40vh;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Panel Header
+   ═══════════════════════════════════════════════════════════ */
 
 .cyoa-panel-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--cyoa-border);
     flex-shrink: 0;
+    background: rgba(255,255,255,0.02);
 }
 
 .cyoa-panel-title {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.85);
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--cyoa-text);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.cyoa-panel-title svg {
-    color: #a78bfa;
-}
+.cyoa-panel-title-text { color: var(--cyoa-accent-txt); }
 
 .cyoa-count-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 20px;
-    height: 20px;
-    padding: 0 6px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #7c3aed, #6366f1);
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 9px;
+    background: var(--cyoa-accent);
     color: #fff;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
-    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.35);
-}
-
-.cyoa-panel-header-actions {
-    display: flex;
-    gap: 4px;
 }
 
 .cyoa-header-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     border: none;
     border-radius: 6px;
-    background: rgba(255, 255, 255, 0.06);
-    color: rgba(255, 255, 255, 0.5);
+    background: transparent;
+    color: var(--cyoa-text-dim);
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all 0.12s ease;
 }
 
 .cyoa-header-btn:hover {
-    background: rgba(255, 255, 255, 0.12);
-    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255,255,255,0.08);
+    color: var(--cyoa-text);
 }
 
-.cyoa-header-btn svg {
-    transition: transform 0.25s ease;
-}
+/* ═══════════════════════════════════════════════════════════
+   Panel Body & Queue
+   ═══════════════════════════════════════════════════════════ */
 
-/* ─── Queue List ─── */
+.cyoa-panel-body {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
 
 .cyoa-queue-list {
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 2px;
-    padding: 8px 12px;
+    padding: 6px 8px;
     overflow-y: auto;
-    max-height: 200px;
+    max-height: 300px;
     scrollbar-width: thin;
-    scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+    scrollbar-color: var(--cyoa-accent-dim) transparent;
 }
 
-.cyoa-queue-list::-webkit-scrollbar {
-    width: 5px;
-}
-
-.cyoa-queue-list::-webkit-scrollbar-thumb {
-    background: rgba(139, 92, 246, 0.3);
-    border-radius: 3px;
-}
+.cyoa-queue-list::-webkit-scrollbar { width: 4px; }
+.cyoa-queue-list::-webkit-scrollbar-thumb { background: var(--cyoa-accent-dim); border-radius: 2px; }
 
 .cyoa-empty-hint {
     text-align: center;
-    color: rgba(255, 255, 255, 0.3);
-    font-size: 12px;
-    padding: 12px 0;
+    color: var(--cyoa-text-dim);
+    font-size: 11px;
+    padding: 16px 8px;
     font-style: italic;
 }
 
-/* ─── Queue Item ─── */
+/* ═══════════════════════════════════════════════════════════
+   Queue Item (compact / expandable)
+   ═══════════════════════════════════════════════════════════ */
 
 .cyoa-queue-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 8px;
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: var(--cyoa-bg2);
+    border: 1px solid var(--cyoa-border);
     transition: all 0.15s ease;
-    animation: cyoa-item-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: cyoa-slide-in 0.2s ease;
 }
 
 .cyoa-queue-item:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(139, 92, 246, 0.15);
+    border-color: var(--cyoa-accent-brd);
+    background: rgba(255,255,255,0.04);
 }
 
-@keyframes cyoa-item-in {
-    0%   { opacity: 0; transform: translateX(-8px); }
+@keyframes cyoa-slide-in {
+    0%   { opacity: 0; transform: translateX(-6px); }
     100% { opacity: 1; transform: translateX(0); }
 }
 
-/* ── Order number ── */
+/* ── Compact row ── */
+
+.cyoa-item-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 6px;
+    min-height: 30px;
+}
 
 .cyoa-item-order {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
-    min-width: 20px;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
     border-radius: 50%;
-    background: rgba(139, 92, 246, 0.15);
-    color: #a78bfa;
-    font-size: 10px;
+    background: var(--cyoa-accent-dim);
+    color: var(--cyoa-accent-txt);
+    font-size: 9px;
     font-weight: 700;
     flex-shrink: 0;
 }
 
-/* ── Type icon ── */
-
-.cyoa-item-type {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    min-width: 22px;
-    border-radius: 5px;
+.cyoa-item-type-tag {
+    font-size: 10px;
     flex-shrink: 0;
+    width: 16px;
+    text-align: center;
 }
 
-.cyoa-type-choice {
-    background: rgba(99, 102, 241, 0.12);
-    color: #818cf8;
-}
-
-.cyoa-type-custom {
-    background: rgba(52, 211, 153, 0.12);
-    color: #6ee7b7;
-}
-
-.cyoa-item-type-icon {
-    display: block;
-}
-
-/* ── Item text ── */
+.cyoa-type-choice { color: var(--cyoa-accent-txt); }
+.cyoa-type-custom { color: #6ee7b7; }
 
 .cyoa-item-text {
     flex: 1;
     min-width: 0;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.75);
-    line-height: 1.4;
+    font-size: 11px;
+    color: var(--cyoa-text);
+    line-height: 1.35;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 6px;
 }
-
-/* ── Item action buttons ── */
 
 .cyoa-item-actions {
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: 1px;
     flex-shrink: 0;
-    opacity: 0.4;
-    transition: opacity 0.15s ease;
+    opacity: 0;
+    transition: opacity 0.12s ease;
 }
 
-.cyoa-queue-item:hover .cyoa-item-actions {
-    opacity: 1;
-}
+.cyoa-queue-item:hover .cyoa-item-actions { opacity: 1; }
 
 .cyoa-item-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     background: transparent;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--cyoa-text-dim);
     cursor: pointer;
-    transition: all 0.12s ease;
+    transition: all 0.1s ease;
     padding: 0;
 }
 
 .cyoa-item-btn:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255,255,255,0.1);
+    color: var(--cyoa-text);
 }
 
-.cyoa-item-btn:disabled {
-    opacity: 0.2;
-    cursor: not-allowed;
+.cyoa-item-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+
+.cyoa-item-expand:hover { color: var(--cyoa-accent-txt) !important; }
+.cyoa-item-remove:hover { color: #f87171 !important; }
+
+/* ── Expanded item ── */
+
+.cyoa-item-expanded {
+    padding: 4px 8px 8px 8px;
+    border-top: 1px solid var(--cyoa-border);
+    animation: cyoa-expand 0.2s ease;
 }
 
-.cyoa-item-edit:hover {
-    color: #a78bfa !important;
-    background: rgba(139, 92, 246, 0.15) !important;
+@keyframes cyoa-expand {
+    0%   { opacity: 0; max-height: 0; }
+    100% { opacity: 1; max-height: 200px; }
 }
 
-.cyoa-item-remove:hover {
-    color: #f87171 !important;
-    background: rgba(248, 113, 113, 0.12) !important;
-}
-
-/* ─── Inline Edit Mode ─── */
-
-.cyoa-edit-input {
-    flex: 1;
-    min-width: 0;
-    padding: 4px 8px;
-    border-radius: 5px;
-    border: 1px solid rgba(139, 92, 246, 0.5);
-    background: rgba(0, 0, 0, 0.4);
+.cyoa-expand-textarea {
+    width: 100%;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--cyoa-accent-brd);
+    background: rgba(0,0,0,0.35);
     color: #e2e8f0;
-    font-size: 12px;
+    font-size: 11px;
     font-family: inherit;
+    resize: vertical;
+    min-height: 36px;
+    max-height: 100px;
     outline: none;
     transition: border-color 0.15s ease;
+    box-sizing: border-box;
 }
 
-.cyoa-edit-input:focus {
-    border-color: rgba(139, 92, 246, 0.8);
-    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15);
+.cyoa-expand-textarea:focus {
+    border-color: var(--cyoa-accent);
+    box-shadow: 0 0 0 2px var(--cyoa-accent-dim);
 }
 
-.cyoa-edit-save,
-.cyoa-edit-cancel {
+.cyoa-expand-actions {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
+    gap: 4px;
+    margin-top: 4px;
+    justify-content: flex-end;
+}
+
+.cyoa-exp-btn {
+    padding: 3px 10px;
     border: none;
     border-radius: 5px;
+    font-size: 10px;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.12s ease;
-    flex-shrink: 0;
-    padding: 0;
+    font-family: inherit;
 }
 
-.cyoa-edit-save {
-    background: rgba(52, 211, 153, 0.15);
-    color: #6ee7b7;
+.cyoa-exp-save {
+    background: var(--cyoa-accent-dim);
+    color: var(--cyoa-accent-txt);
 }
 
-.cyoa-edit-save:hover {
-    background: rgba(52, 211, 153, 0.3);
+.cyoa-exp-save:hover {
+    background: var(--cyoa-accent-glow);
 }
 
-.cyoa-edit-cancel {
-    background: rgba(248, 113, 113, 0.1);
-    color: #fca5a5;
+.cyoa-exp-cancel {
+    background: rgba(255,255,255,0.05);
+    color: var(--cyoa-text-dim);
 }
 
-.cyoa-edit-cancel:hover {
-    background: rgba(248, 113, 113, 0.2);
+.cyoa-exp-cancel:hover {
+    background: rgba(255,255,255,0.1);
+    color: var(--cyoa-text);
 }
 
-/* ─── Add Custom Text Row ─── */
+/* ═══════════════════════════════════════════════════════════
+   Add Custom Text
+   ═══════════════════════════════════════════════════════════ */
 
 .cyoa-add-custom {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 12px;
-    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    gap: 4px;
+    padding: 6px 8px;
+    border-top: 1px solid var(--cyoa-border);
     flex-shrink: 0;
 }
 
 .cyoa-custom-input {
     flex: 1;
     min-width: 0;
-    padding: 7px 12px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.04);
+    padding: 5px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: rgba(255,255,255,0.04);
     color: #e2e8f0;
-    font-size: 12px;
+    font-size: 11px;
     font-family: inherit;
     outline: none;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
 }
 
-.cyoa-custom-input::placeholder {
-    color: rgba(255, 255, 255, 0.25);
-}
+.cyoa-custom-input::placeholder { color: rgba(255,255,255,0.22); }
 
 .cyoa-custom-input:focus {
-    border-color: rgba(139, 92, 246, 0.5);
-    background: rgba(255, 255, 255, 0.06);
-    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.1);
+    border-color: var(--cyoa-accent-brd);
+    background: rgba(255,255,255,0.06);
 }
 
 .cyoa-add-btn {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 4px;
-    padding: 7px 12px;
-    border: 1px solid rgba(52, 211, 153, 0.25);
-    border-radius: 8px;
-    background: rgba(52, 211, 153, 0.1);
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: 1px solid rgba(110, 231, 183, 0.2);
+    border-radius: 6px;
+    background: rgba(110, 231, 183, 0.08);
     color: #6ee7b7;
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.15s ease;
-    white-space: nowrap;
-    font-family: inherit;
+    transition: all 0.12s ease;
     flex-shrink: 0;
+    font-family: inherit;
+    line-height: 1;
 }
 
 .cyoa-add-btn:hover {
-    background: rgba(52, 211, 153, 0.2);
-    border-color: rgba(52, 211, 153, 0.4);
-    transform: translateY(-1px);
+    background: rgba(110, 231, 183, 0.18);
+    border-color: rgba(110, 231, 183, 0.35);
 }
 
-.cyoa-add-btn:active {
-    transform: translateY(0);
-}
-
-/* ─── Panel Footer ─── */
+/* ═══════════════════════════════════════════════════════════
+   Panel Footer
+   ═══════════════════════════════════════════════════════════ */
 
 .cyoa-panel-footer {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 8px;
-    padding: 10px 16px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    gap: 6px;
+    padding: 7px 10px;
+    border-top: 1px solid var(--cyoa-border);
     flex-shrink: 0;
 }
-
-/* ─── Action Buttons ─── */
 
 .cyoa-btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 7px 14px;
+    gap: 4px;
+    padding: 5px 12px;
     border: none;
-    border-radius: 8px;
-    font-size: 13px;
+    border-radius: 6px;
+    font-size: 11px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
     white-space: nowrap;
     font-family: inherit;
 }
 
 .cyoa-btn-clear {
-    background: rgba(255, 255, 255, 0.06);
-    color: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255,255,255,0.05);
+    color: var(--cyoa-text-dim);
 }
 
 .cyoa-btn-clear:hover {
-    background: rgba(255, 255, 255, 0.12);
-    color: rgba(255, 255, 255, 0.9);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255,255,255,0.1);
+    color: var(--cyoa-text);
 }
 
 .cyoa-btn-send {
-    background: linear-gradient(135deg, #7c3aed, #6366f1);
+    background: var(--cyoa-accent);
     color: #fff;
-    border: 1px solid rgba(139, 92, 246, 0.4);
-    box-shadow: 0 2px 12px rgba(124, 58, 237, 0.3);
+    box-shadow: 0 2px 10px var(--cyoa-accent-glow);
     position: relative;
     overflow: hidden;
 }
@@ -539,16 +548,9 @@
 .cyoa-btn-send::after {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-        45deg,
-        transparent 30%,
-        rgba(255, 255, 255, 0.08) 50%,
-        transparent 70%
-    );
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
     animation: cyoa-shimmer 3s infinite linear;
     pointer-events: none;
 }
@@ -559,85 +561,137 @@
 }
 
 .cyoa-btn-send:hover:not(:disabled) {
-    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.45);
+    filter: brightness(1.15);
+    box-shadow: 0 4px 18px var(--cyoa-accent-glow);
     transform: translateY(-1px);
 }
 
-.cyoa-btn-send:active:not(:disabled) {
-    transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
-}
-
-.cyoa-btn-send:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
+.cyoa-btn-send:disabled { opacity: 0.35; cursor: not-allowed; }
 
 /* ═══════════════════════════════════════════════════════════
-   Settings Panel
+   Settings Panel (inside ST Extensions drawer)
    ═══════════════════════════════════════════════════════════ */
 
-.cyoa-settings .cyoa-block {
-    margin-bottom: 10px;
-}
-
-.cyoa-settings .cyoa-block label {
-    display: block;
-    margin-bottom: 4px;
-    font-weight: 600;
-    font-size: 13px;
-}
-
-.cyoa-settings .cyoa-format-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 6px;
-}
+.cyoa-settings .cyoa-block { margin-bottom: 10px; }
+.cyoa-settings .cyoa-block > label { display: block; margin-bottom: 4px; font-weight: 600; font-size: 13px; }
 
 .cyoa-settings .cyoa-format-textarea {
-    width: 100%;
-    min-height: 50px;
-    max-height: 120px;
-    resize: vertical;
-    font-family: 'Courier New', monospace;
-    font-size: 12px;
-    padding: 8px;
-    border-radius: 6px;
+    width: 100%; min-height: 45px; max-height: 100px; resize: vertical;
+    font-family: 'Courier New', monospace; font-size: 11px; padding: 6px 8px; border-radius: 6px;
     background: var(--SmartThemeBlurTintColor, rgba(0,0,0,0.3));
     color: var(--SmartThemeBodyColor, #ccc);
     border: 1px solid var(--SmartThemeBorderColor, rgba(255,255,255,0.1));
 }
 
-.cyoa-settings .cyoa-small-btn {
-    padding: 4px 8px;
-    font-size: 11px;
-    min-width: auto;
+.cyoa-settings .cyoa-small-btn { padding: 3px 8px; font-size: 11px; min-width: auto; }
+
+/* ── Position selector ── */
+
+.cyoa-position-grid {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
 }
 
+.cyoa-pos-option {
+    flex: 1;
+    cursor: pointer;
+    text-align: center;
+}
+
+.cyoa-pos-option input { display: none; }
+
+.cyoa-pos-preview {
+    display: flex;
+    gap: 2px;
+    height: 44px;
+    border-radius: 6px;
+    border: 2px solid rgba(255,255,255,0.08);
+    overflow: hidden;
+    padding: 3px;
+    transition: all 0.15s ease;
+    background: rgba(0,0,0,0.2);
+}
+
+.cyoa-pos-preview-bottom { flex-direction: column; }
+
+.cyoa-pos-option input:checked ~ .cyoa-pos-preview {
+    border-color: var(--SmartThemeQuoteColor, #8b5cf6);
+    box-shadow: 0 0 8px rgba(139, 92, 246, 0.2);
+}
+
+.cyoa-pos-chat {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border-radius: 3px;
+}
+
+.cyoa-pos-panel {
+    background: rgba(139, 92, 246, 0.25);
+    border-radius: 3px;
+}
+
+.cyoa-pos-right { width: 14px; }
+.cyoa-pos-left  { width: 14px; }
+.cyoa-pos-bot   { height: 10px; }
+
+.cyoa-pos-option span {
+    display: block;
+    margin-top: 4px;
+    font-size: 10px;
+    opacity: 0.6;
+}
+
+.cyoa-pos-option input:checked ~ span { opacity: 1; font-weight: 600; }
+
+/* ── Theme selector ── */
+
+.cyoa-theme-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.cyoa-theme-swatch {
+    cursor: pointer;
+    text-align: center;
+    width: 48px;
+}
+
+.cyoa-theme-swatch input { display: none; }
+
+.cyoa-swatch-color {
+    width: 42px;
+    height: 24px;
+    border-radius: 6px;
+    border: 2px solid rgba(255,255,255,0.06);
+    margin: 0 auto;
+    transition: all 0.15s ease;
+}
+
+.cyoa-theme-swatch input:checked ~ .cyoa-swatch-color {
+    border-color: #fff;
+    box-shadow: 0 0 10px rgba(255,255,255,0.2);
+    transform: scale(1.1);
+}
+
+.cyoa-theme-swatch span {
+    display: block;
+    margin-top: 3px;
+    font-size: 9px;
+    opacity: 0.5;
+}
+
+.cyoa-theme-swatch input:checked ~ span { opacity: 1; font-weight: 600; }
+
 /* ═══════════════════════════════════════════════════════════
-   Responsive / Mobile
+   Responsive
    ═══════════════════════════════════════════════════════════ */
 
 @media (max-width: 768px) {
-    .cyoa-panel-inner {
-        max-height: 55vh;
-    }
-
-    .cyoa-panel-header {
-        padding: 8px 12px;
-    }
-
-    .cyoa-queue-list {
-        padding: 6px 8px;
-    }
-
-    .cyoa-panel-footer {
-        padding: 8px 12px;
-    }
-
-    .cyoa-btn {
-        padding: 6px 10px;
-        font-size: 12px;
+    .cyoa-panel.cyoa-pos-side-right,
+    .cyoa-panel.cyoa-pos-side-left {
+        width: 260px;
     }
 }
