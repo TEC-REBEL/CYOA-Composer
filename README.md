@@ -21,7 +21,7 @@ This extension intercepts choice button clicks and converts them into a multi-se
 ### Method 1: Git Clone (Recommended)
 ```bash
 cd SillyTavern/public/scripts/extensions/third-party/
-git clone https://github.com/YOUR_USERNAME/cyoa-combiner.git
+git clone https://github.com/TEC-REBEL/cyoa-combiner.git
 ```
 
 ### Method 2: Manual
