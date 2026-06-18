@@ -689,40 +689,31 @@
    Chat Bar Toggle Button
    ═══════════════════════════════════════════════════════════ */
 
+/* The button is a div inside #leftSendForm, so it inherits
+   ST's #leftSendForm>div sizing (--bottomFormBlockSize) automatically.
+   We only add color/glow for active state. */
+
 .cyoa-chat-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    color: var(--SmartThemeBodyColor, #ccc);
-    opacity: 0.6;
-    transition: all 0.2s ease;
     position: relative;
-    border-radius: 6px;
+    color: var(--SmartThemeBodyColor, #ccc);
+    transition: color 0.2s ease, filter 0.2s ease;
 }
 
 .cyoa-chat-toggle:hover {
-    opacity: 1;
     color: #a78bfa;
 }
 
 .cyoa-chat-toggle.cyoa-toggle-active {
-    opacity: 1;
+    opacity: 1 !important;
     color: #a78bfa;
-    background: rgba(139, 92, 246, 0.12);
-}
-
-.cyoa-chat-toggle.cyoa-toggle-active svg {
-    filter: drop-shadow(0 0 4px rgba(139, 92, 246, 0.5));
+    filter: drop-shadow(0 0 6px rgba(139, 92, 246, 0.5)) brightness(1.2) !important;
 }
 
 /* Notification badge on toggle button */
 .cyoa-toggle-badge {
     position: absolute;
-    top: -2px;
-    right: -2px;
+    top: 2px;
+    right: 0px;
     min-width: 14px;
     height: 14px;
     padding: 0 3px;
