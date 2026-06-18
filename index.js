@@ -54,6 +54,7 @@ const queue = [];
 let nextItemId = 1;
 let panel = null;
 let isSending = false;
+let manualOpen = false;
 
 /* ═══════════════════════════════════════════════════════════
    Helpers
@@ -167,7 +168,9 @@ function clearQueue() {
         el.querySelector('.cyoa-select-number')?.remove();
     });
     queue.length = 0;
+    manualOpen = false;
     renderPanel();
+    updateToggleButton();
 }
 
 function refreshBadges() {
@@ -279,9 +282,11 @@ function renderPanel() {
         </div>
     </div>`;
 
-    // Visibility
-    panel.classList.toggle('cyoa-visible', count > 0);
-    if (count === 0) panel.classList.remove('cyoa-collapsed');
+    // Visibility — show if queue has items OR manually opened
+    const shouldShow = count > 0 || manualOpen;
+    panel.classList.toggle('cyoa-visible', shouldShow);
+    if (!shouldShow) panel.classList.remove('cyoa-collapsed');
+    updateToggleButton();
 
     bindPanelEvents();
 }
@@ -514,6 +519,66 @@ async function setupUI() {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   Chat Bar Toggle Button
+   ═══════════════════════════════════════════════════════════ */
+
+function createToggleButton() {
+    const container = document.getElementById('leftSendForm');
+    if (!container) { console.warn(LOG, '#leftSendForm not found'); return; }
+    // Don't add twice
+    if (document.getElementById('cyoa-toggle-btn')) return;
+
+    const btn = document.createElement('div');
+    btn.id = 'cyoa-toggle-btn';
+    btn.className = 'cyoa-chat-toggle interactable';
+    btn.title = 'Open CYOA Composer';
+    btn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>`;
+    btn.addEventListener('click', togglePanel);
+    container.appendChild(btn);
+}
+
+function togglePanel() {
+    const isVisible = panel && panel.classList.contains('cyoa-visible');
+    if (isVisible) {
+        // Close: if queue is empty just hide, if queue has items collapse
+        if (queue.length === 0) {
+            manualOpen = false;
+            renderPanel();
+        } else {
+            panel.classList.toggle('cyoa-collapsed');
+        }
+    } else {
+        // Open
+        manualOpen = true;
+        renderPanel();
+        // Focus the custom text input
+        setTimeout(() => {
+            document.getElementById('cyoa-custom-input')?.focus();
+        }, 100);
+    }
+    updateToggleButton();
+}
+
+function updateToggleButton() {
+    const btn = document.getElementById('cyoa-toggle-btn');
+    if (!btn) return;
+    const isActive = panel && panel.classList.contains('cyoa-visible') && !panel.classList.contains('cyoa-collapsed');
+    btn.classList.toggle('cyoa-toggle-active', isActive);
+    // Show badge if queue has items
+    let badge = btn.querySelector('.cyoa-toggle-badge');
+    if (queue.length > 0) {
+        if (!badge) {
+            badge = document.createElement('span');
+            badge.className = 'cyoa-toggle-badge';
+            btn.appendChild(badge);
+        }
+        badge.textContent = String(queue.length);
+    } else if (badge) {
+        badge.remove();
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
    Init
    ═══════════════════════════════════════════════════════════ */
 
@@ -526,6 +591,7 @@ async function setupUI() {
 
     await setupUI();
     ensurePanel();
+    createToggleButton();
 
     document.addEventListener('click', onButtonClick, true);
 

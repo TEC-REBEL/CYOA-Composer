@@ -686,6 +686,61 @@
 .cyoa-theme-swatch input:checked ~ span { opacity: 1; font-weight: 600; }
 
 /* ═══════════════════════════════════════════════════════════
+   Chat Bar Toggle Button
+   ═══════════════════════════════════════════════════════════ */
+
+.cyoa-chat-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    color: var(--SmartThemeBodyColor, #ccc);
+    opacity: 0.6;
+    transition: all 0.2s ease;
+    position: relative;
+    border-radius: 6px;
+}
+
+.cyoa-chat-toggle:hover {
+    opacity: 1;
+    color: #a78bfa;
+}
+
+.cyoa-chat-toggle.cyoa-toggle-active {
+    opacity: 1;
+    color: #a78bfa;
+    background: rgba(139, 92, 246, 0.12);
+}
+
+.cyoa-chat-toggle.cyoa-toggle-active svg {
+    filter: drop-shadow(0 0 4px rgba(139, 92, 246, 0.5));
+}
+
+/* Notification badge on toggle button */
+.cyoa-toggle-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    min-width: 14px;
+    height: 14px;
+    padding: 0 3px;
+    border-radius: 7px;
+    background: linear-gradient(135deg, #7c3aed, #6366f1);
+    color: #fff;
+    font-size: 8px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    box-shadow: 0 1px 4px rgba(124, 58, 237, 0.4);
+    animation: cyoa-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
    Responsive
    ═══════════════════════════════════════════════════════════ */
 
