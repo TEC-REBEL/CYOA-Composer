@@ -531,7 +531,7 @@ function createToggleButton() {
     const btn = document.createElement('div');
     btn.id = 'cyoa-toggle-btn';
     btn.className = 'fa-solid fa-list-check cyoa-chat-toggle interactable';
-    btn.title = 'Open CYOA Composer';
+    btn.title = 'Open CYOA Combiner';
     btn.addEventListener('click', togglePanel);
     container.appendChild(btn);
 }

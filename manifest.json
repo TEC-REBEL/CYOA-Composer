@@ -1,5 +1,5 @@
 {
-    "display_name": "CYOA Composer",
+    "display_name": "CYOA Combiner",
     "loading_order": 100,
     "requires": [],
     "optional": [],
@@ -7,5 +7,5 @@
     "css": "style.css",
     "author": "TEC-REBEL",
     "version": "1.2.0",
-    "homePage": "https://github.com/TEC-REBEL/cyoa-composer"
+    "homePage": "https://github.com/TEC-REBEL/cyoa-combiner"
 }
