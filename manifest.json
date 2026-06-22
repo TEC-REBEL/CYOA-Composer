@@ -1,11 +1,11 @@
 {
-    "display_name": "CYOA Multi-Choice Combiner",
+    "display_name": "CYOA Composer",
     "loading_order": 100,
     "requires": [],
     "optional": [],
     "js": "index.js",
     "css": "style.css",
-    "author": "User",
-    "version": "1.0.0",
-    "homePage": "https://github.com/TEC-REBEL/cyoa-combiner"
+    "author": "TEC-REBEL",
+    "version": "1.2.0",
+    "homePage": "https://github.com/TEC-REBEL/cyoa-composer"
 }

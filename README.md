@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/banner.png" alt="CYOA Multi-Choice Combiner" width="100%" />
+<img src="assets/banner.png" alt="CYOA Composer" width="100%" />
 
 <br/>
 
@@ -9,7 +9,7 @@
 <br/>
 
 [![SillyTavern](https://img.shields.io/badge/SillyTavern-Extension-8B5CF6?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+PHBhdGggZD0iTTEyIDJMMiAyMmgyMEwxMiAyeiIvPjwvc3ZnPg==&labelColor=1a1025)](https://github.com/SillyTavern/SillyTavern)
-[![Version](https://img.shields.io/badge/version-1.1.0-6366F1?style=for-the-badge&labelColor=1a1025)](https://github.com/TEC-REBEL/cyoa-combiner/releases)
+[![Version](https://img.shields.io/badge/version-1.2.0-6366F1?style=for-the-badge&labelColor=1a1025)](https://github.com/TEC-REBEL/cyoa-composer/releases)
 [![License](https://img.shields.io/badge/license-MIT-34D399?style=for-the-badge&labelColor=1a1025)](LICENSE)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES2022-F7DF1E?style=for-the-badge&logo=javascript&labelColor=1a1025)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
@@ -82,18 +82,18 @@ Pick from **Purple Haze**, **Cyber Cyan**, **Sakura Rose**, **Solar Amber**, **E
 1. Open SillyTavern → **Extensions** → **Install Extension**
 2. Paste the URL:
    ```
-   https://github.com/TEC-REBEL/cyoa-combiner
+   https://github.com/TEC-REBEL/cyoa-composer
    ```
 3. Click **Install** and reload
 
 ### Method 2: Git Clone
 ```bash
 cd SillyTavern/public/scripts/extensions/third-party/
-git clone https://github.com/TEC-REBEL/cyoa-combiner.git
+git clone https://github.com/TEC-REBEL/cyoa-composer.git
 ```
 
 ### Method 3: Manual Download
-1. Download as ZIP → extract to `.../third-party/cyoa-combiner/`
+1. Download as ZIP → extract to `.../third-party/cyoa-composer/`
 2. Reload SillyTavern
 
 ---
@@ -112,7 +112,7 @@ The AI presents these choices (as buttons or plain text):
 > 3. 🏃 *Let her start cleaning*
 > 4. 📱 *Check your phone for Devil Skills*
 
-**With CYOA Combiner:**
+**With CYOA Composer:**
 
 1. Click **choice 1** → glows, appears in the side panel
 2. Type *"Whisper to Lilith to play along"* → click **+**
@@ -135,7 +135,7 @@ I choose:
 
 ## ⚙️ Configuration
 
-Open **Extensions** panel → **🎭 CYOA Multi-Choice Combiner**:
+Open **Extensions** panel → **🎭 CYOA Composer**:
 
 ### Choice Detection
 
